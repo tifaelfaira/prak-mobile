@@ -25,7 +25,14 @@ class WebViewActivity : AppCompatActivity() {
 
         // 2. Konfigurasi WebView (Sesuai Modul Poin 2)
         binding.webView.apply {
-            webViewClient = WebViewClient()
+            webViewClient = object : android.webkit.WebViewClient() {
+                override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+
+                    binding.progressBar.visibility = android.view.View.GONE
+                }
+            }
+
             settings.javaScriptEnabled = true
             loadUrl("https://merdeka.com")
 

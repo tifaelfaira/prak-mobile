@@ -21,14 +21,15 @@ class FifthActivity : AppCompatActivity() {
         // 1. Setup Toolbar sesuai ID di XML
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
-            title = "Activity Fifth"
-            subtitle = "Ini adalah subtitle"
+            title = "Advanced UI Roujwa"
+            subtitle = "Latihan Improvisasi Saya"
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-
-            // SESUAI MODUL: Menggunakan ikon manual yang kamu buat di drawable
             setHomeAsUpIndicator(R.drawable.ic_arrow_back)
         }
+
+        binding.toolbar.alpha = 0f
+        binding.toolbar.animate().alpha(1f).setDuration(1500)
 
         // 2. Navigasi ke WebViewActivity
         binding.btnWebView.setOnClickListener {
@@ -57,6 +58,10 @@ class FifthActivity : AppCompatActivity() {
             }
             R.id.action_settings -> {
                 Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.sub_menu_about -> {
+                Toast.makeText(this, "Aplikasi Pertemuan 5 - Versi Improvisasi", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)

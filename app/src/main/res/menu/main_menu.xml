@@ -14,4 +14,9 @@
         android:icon="@android:drawable/ic_menu_preferences"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/sub_menu_about"
+        android:title="About App"
+        app:showAsAction="never" />
+
 </menu>

@@ -19,6 +19,14 @@
             app:titleTextColor="@android:color/white"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="visible" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <android.webkit.WebView
