@@ -1,4 +1,4 @@
-package com.example.roujwa_apps.pertemuan_2
+package com.example.roujwa_apps.Home.pertemuan_2
 
 fun main() {
     println("Hai rekan-rekan...")

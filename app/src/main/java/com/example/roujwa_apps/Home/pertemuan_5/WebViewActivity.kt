@@ -1,6 +1,8 @@
-package com.example.roujwa_apps.pertemuan_5
+package com.example.roujwa_apps.Home.pertemuan_5
 
 import android.os.Bundle
+import android.view.View
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -25,11 +27,11 @@ class WebViewActivity : AppCompatActivity() {
 
         // 2. Konfigurasi WebView (Sesuai Modul Poin 2)
         binding.webView.apply {
-            webViewClient = object : android.webkit.WebViewClient() {
-                override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+            webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
 
-                    binding.progressBar.visibility = android.view.View.GONE
+                    binding.progressBar.visibility = View.GONE
                 }
             }
 

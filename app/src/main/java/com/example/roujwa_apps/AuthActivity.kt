@@ -36,7 +36,7 @@ class AuthActivity : AppCompatActivity() {
                     putString("email", email)
                 }
 
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, BaseActivity::class.java)
                 startActivity(intent)
             } else {
                 MaterialAlertDialogBuilder(this)
