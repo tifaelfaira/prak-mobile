@@ -42,6 +42,14 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    // --- TAMBAHAN SESUAI MODUL ---
+    implementation("androidx.gridlayout:gridlayout:1.0.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    // ----------------------------
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

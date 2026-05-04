@@ -1,8 +1,6 @@
 package com.example.roujwa_apps
 
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,42 +11,63 @@ import com.example.roujwa_apps.More.MoreFragment
 import com.example.roujwa_apps.databinding.ActivityBaseBinding
 
 class BaseActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityBaseBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
         binding = ActivityBaseBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+
+        // 1. Set Toolbar
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.elevation = 0f
+
+        // 2. PERBAIKAN PADDING: Hapus v.setPadding supaya gelombang ungu bisa "mentok" ke atas
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+            // Jangan kasih padding top di sini agar View gelombang bisa full ke atas status bar
+            v.setPadding(systemBars.left, 0, systemBars.right, 0)
             insets
         }
-        replaceFragment(HomeFragment())
 
-        binding.bottomNavView.setOnItemSelectedListener {
-            when (it.itemId) {
+        // Default awal
+        if (savedInstanceState == null) {
+            updateToolbar("Home")
+            replaceFragment(HomeFragment())
+        }
+
+        binding.bottomNavView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
                 R.id.home -> {
+                    updateToolbar("Home")
                     replaceFragment(HomeFragment())
                     true
                 }
                 R.id.message -> {
+                    updateToolbar("Message")
                     replaceFragment(MessageFragment())
                     true
                 }
                 R.id.more -> {
+                    updateToolbar("More")
                     replaceFragment(MoreFragment())
                     true
                 }
-                else ->false
+                else -> false
             }
         }
     }
 
+    // Fungsi pembantu buat ganti judul biar gak repot
+    fun updateToolbar(title: String) {
+        supportActionBar?.title = title
+    }
+
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(binding.fragmentContainer.id, fragment)
-            //.addToBackStack(null) -> ini kita nonaktifkan agar saat back langsung keluar aplikasi
+            .replace(R.id.fragment_container, fragment)
             .commit()
     }
 }
