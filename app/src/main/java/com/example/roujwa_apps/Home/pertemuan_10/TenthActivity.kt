@@ -66,6 +66,11 @@ class TenthActivity : AppCompatActivity() {
                     badge.isVisible = true
                     badge.number = 5
                 }
+
+                2 -> {
+                    tab.text = "Produk"
+                    tab.icon = ContextCompat.getDrawable(  this, R.drawable.ic_home)
+                }
             }
         }.attach()
 
