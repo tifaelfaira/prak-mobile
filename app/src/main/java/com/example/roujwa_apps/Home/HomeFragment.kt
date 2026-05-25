@@ -9,37 +9,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.edit
+import androidx.lifecycle.lifecycleScope
 import com.example.roujwa_apps.Home.pertemuan_10.TenthActivity
 import com.example.roujwa_apps.Home.pertemuan_2.SecondActivity
 import com.example.roujwa_apps.Home.pertemuan_3.ThirdActivity
 import com.example.roujwa_apps.Home.pertemuan_4.FourthActivity
 import com.example.roujwa_apps.Home.pertemuan_5.FifthActivity
 import com.example.roujwa_apps.Home.pertemuan_7.SeventhActivity
-import com.example.roujwa_apps.Home.pertemuan_9.NinthActivity // Import Activity barunya
+import com.example.roujwa_apps.Home.pertemuan_9.NinthActivity
 import com.example.roujwa_apps.R
+import com.example.roujwa_apps.data.api.CatFactApiClient
 import com.example.roujwa_apps.databinding.FragmentHomeBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        /** Ganti menjadi versi binding */
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val sharedPref = requireContext().getSharedPreferences("user_pref", MODE_PRIVATE)
 
+        // Tombol-tombol pertemuan bawaan kamu tetap aman di sini
         binding.btnToSecond.setOnClickListener {
             val intent = Intent(requireContext(), SecondActivity::class.java)
             startActivity(intent)
@@ -68,7 +69,6 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        // --- TAMBAHAN UNTUK PERTEMUAN 9 ---
         binding.btnToNinth.setOnClickListener {
             val intent = Intent(requireContext(), NinthActivity::class.java)
             startActivity(intent)
@@ -97,5 +97,32 @@ class HomeFragment : Fragment() {
                 }
                 .show()
         }
+
+        // Panggil fungsi pencari fakta kucing saat fragment dibuat
+        loadCatFact()
+
+        // Tombol refresh panggil fungsi pencari fakta kucing
+        binding.btnRefresh.setOnClickListener {
+            loadCatFact()
+        }
+    }
+
+    private fun loadCatFact() {
+        binding.tvCatFact.text = "Loading cat fact..."
+        lifecycleScope.launch {
+            try {
+                val response = CatFactApiClient.apiService.getCatFact()
+                binding.tvCatFact.text = "\"${response.fact}\""
+            } catch (e: Exception) {
+                binding.tvCatFact.text = "Gagal mengambil fakta kucing."
+                // 🛠️ FIX LOGCAT: Baris ini akan mencetak error asli ke Android Studio kamu!
+                Log.e("ERROR_API", "Penyebab gagal load API: ${e.message}", e)
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
