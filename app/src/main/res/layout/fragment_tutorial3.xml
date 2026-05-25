@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#87C5D1"
+    android:padding="24dp"
+    tools:context=".Message.tutorial.Tutorial1Fragment">
+
+    <ImageView
+        android:id="@+id/imgTutorial1"
+        android:layout_width="172dp"
+        android:layout_height="157dp"
+        android:layout_marginTop="64dp"
+        android:contentDescription="Tutorial Illustration 1"
+        android:src="@drawable/bumi_aira"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitleTutorial1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Selamat Datang di Fitur Message!"
+        android:textAlignment="center"
+        android:textColor="#212121"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgTutorial1" />
+
+    <TextView
+        android:id="@+id/tvDescTutorial1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Kini Anda dapat saling bertukar pesan dan berkomunikasi secara real-time dengan pengguna lain secara lebih mudah dan cepat."
+        android:textAlignment="center"
+        android:textColor="#757575"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleTutorial1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

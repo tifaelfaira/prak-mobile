@@ -1,11 +1,17 @@
 package com.example.roujwa_apps.Message
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.roujwa_apps.Message.tutorial.TutorialMessageActivity
+import com.example.roujwa_apps.R
 import com.example.roujwa_apps.databinding.FragmentMessageBinding
 
 class MessageFragment : Fragment() {
@@ -13,7 +19,7 @@ class MessageFragment : Fragment() {
     private var _binding: FragmentMessageBinding? = null
     private val binding get() = _binding!!
 
-    // 🔥 FIX: ganti URL ke yang stabil
+
     private val messageList = listOf(
         MessageModel("Alya", "Halo! Apa kabar?", "https://i.pravatar.cc/150?img=1"),
         MessageModel("Budi", "Sudah makan?", "https://i.pravatar.cc/150?img=2"),
@@ -38,15 +44,34 @@ class MessageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Hilangkan ActionBar biar gak double
+
         (activity as? AppCompatActivity)?.supportActionBar?.hide()
 
-        // Kosongkan title toolbar
-        binding.toolbarMessage.title = ""
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbarMessage)
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            setDisplayShowTitleEnabled(false)
+        }
 
-        // Adapter
+        setHasOptionsMenu(true)
         val adapter = MessageAdapter(requireContext(), messageList)
         binding.listMessageItems.adapter = adapter
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.message_toolbar_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_tutorial -> {
+                val intent = Intent(requireContext(), TutorialMessageActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {
