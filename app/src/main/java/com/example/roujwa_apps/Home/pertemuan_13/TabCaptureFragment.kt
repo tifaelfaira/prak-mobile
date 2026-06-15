@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.roujwa_apps.databinding.FragmentTabCaptureBinding
+import com.example.roujwa_apps.utils.PermissionHelper
 
 class TabCaptureFragment : Fragment() {
     private var _binding: FragmentTabCaptureBinding? = null
@@ -59,25 +60,32 @@ class TabCaptureFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+ //       binding.btnCapture.setOnClickListener {
+ //           if (hasCameraPermission()) {
+ //                openCamera()
+ //           } else {
+ //               permissionLauncher.launch(Manifest.permission.CAMERA)
+ //           }
+ //       }
+
         binding.btnCapture.setOnClickListener {
-            if (hasCameraPermission()) {
-                openCamera()
+            if (!PermissionHelper.hasPermission(
+                    requireActivity(),
+                    Manifest.permission.CAMERA)) {
+                PermissionHelper.requestPermission(
+                    permissionLauncher,
+                    Manifest.permission.CAMERA
+                )
             } else {
-                permissionLauncher.launch(Manifest.permission.CAMERA)
+                openCamera()
             }
         }
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun hasCameraPermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun openCamera() {
